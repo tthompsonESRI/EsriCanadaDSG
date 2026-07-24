@@ -1,0 +1,7 @@
+# Client VRP payloads may contain ArcGIS access tokens and sensitive route data.
+data/
+
+# Local editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db

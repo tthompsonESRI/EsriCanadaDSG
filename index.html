@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vehicle Route Plan</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.33/esri/themes/light/main.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://js.arcgis.com/4.33/"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar" aria-label="Route details">
+      <header>
+        <div class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div>
+          <p class="eyebrow">Network analysis workspace</p>
+          <h1>Vehicle Route Plan</h1>
+        </div>
+        <p id="jobId" class="job-id">No result loaded</p>
+      </header>
+
+      <section class="input-panel">
+        <h2>Load VRP result</h2>
+        <p>Select the route and stops JSON files together, or select one combined JSON file.</p>
+        <label class="file-button" for="jsonFiles">
+          <span class="upload-icon" aria-hidden="true">↑</span>
+          <span><strong>Choose JSON payloads</strong><small>Route + stops, or a combined result</small></span>
+        </label>
+        <input id="jsonFiles" type="file" accept=".json,application/json" multiple>
+        <details>
+          <summary>Or paste JSON</summary>
+          <textarea id="jsonInput" rows="5" placeholder="Paste a route, stops, or combined JSON payload"></textarea>
+          <button id="loadJsonButton" type="button">Display pasted JSON</button>
+        </details>
+      </section>
+
+      <section id="status" class="status" aria-live="polite">Choose route and stops JSON payloads to begin.</section>
+
+      <section class="stats" aria-label="Route summary">
+        <div><strong id="orderCount">—</strong><span>Orders</span></div>
+        <div><strong id="totalDistance">—</strong><span>Kilometres</span></div>
+        <div><strong id="totalTime">—</strong><span>Total time</span></div>
+        <div><strong id="violationTime">—</strong><span>Violation time</span></div>
+      </section>
+
+      <section class="controls">
+        <button id="zoomButton" type="button"><span aria-hidden="true">⌖</span> Zoom to full route</button>
+      </section>
+
+      <section class="schedule">
+        <div class="section-heading">
+          <h2>Stop schedule</h2>
+          <span id="stopCount"></span>
+        </div>
+        <input id="stopSearch" type="search" placeholder="Find an order…" aria-label="Find an order">
+        <ol id="stopList"></ol>
+      </section>
+    </aside>
+    <section id="viewDiv" aria-label="Vehicle route map"></section>
+  </main>
+</body>
+</html>
