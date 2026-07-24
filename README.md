@@ -4,7 +4,7 @@ A lightweight ArcGIS Maps SDK for JavaScript application for visualizing Vehicle
 
 ## Live application
 
-https://tthompsonesri.github.io/EsriCanadaDSG/
+https://tthompsonesri.github.io/EsriCanadaDSG/VRPSolveApp/
 
 ## Features
 

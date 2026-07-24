@@ -30,10 +30,16 @@ jobs:
         with:
           enablement: true
 
+      - name: Stage application in subfolder
+        shell: bash
+        run: |
+          mkdir -p _site/VRPSolveApp
+          cp index.html app.js styles.css _site/VRPSolveApp/
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy GitHub Pages
         id: deployment
