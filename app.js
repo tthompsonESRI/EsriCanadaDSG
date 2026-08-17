@@ -108,22 +108,37 @@ require([
     const sorted = stopsResponse.value.features
       .filter((feature) => Number.isFinite(feature.geometry?.x) && Number.isFinite(feature.geometry?.y))
       .sort((a, b) => a.attributes.Sequence - b.attributes.Sequence);
+    const stopLabels = [];
     stopGraphics = sorted.map((feature) => {
       const isDepot = feature.attributes.StopType === 1;
+      const geometry = new Point({ ...feature.geometry, spatialReference: { wkid: 4326 } });
       const graphic = new Graphic({
-        geometry: new Point({ ...feature.geometry, spatialReference: { wkid: 4326 } }),
+        geometry,
         attributes: feature.attributes,
         symbol: isDepot
-          ? { type: "simple-marker", style: "diamond", size: 16, color: "#ffad32", outline: { color: "#ffffff", width: 2 } }
-          : { type: "simple-marker", size: 8, color: "#08a39c", outline: { color: "#ffffff", width: 1.4 } },
+          ? { type: "simple-marker", style: "diamond", size: 24, color: "#ffad32", outline: { color: "#ffffff", width: 2 } }
+          : { type: "simple-marker", size: 20, color: "#08a39c", outline: { color: "#ffffff", width: 1.4 } },
         popupTemplate: {
           title: isDepot ? "Depot" : "Order {Name}",
           content: () => popupContent(feature.attributes, isDepot)
         }
       });
+      stopLabels.push(new Graphic({
+        geometry,
+        attributes: feature.attributes,
+        symbol: {
+          type: "text",
+          text: String(feature.attributes.Sequence ?? ""),
+          color: isDepot ? "#3b2a00" : "#ffffff",
+          font: { family: "Arial", size: 9, weight: "bold" },
+          horizontalAlignment: "center",
+          verticalAlignment: "middle"
+        },
+        popupTemplate: graphic.popupTemplate
+      }));
       return graphic;
     });
-    stopLayer.addMany(stopGraphics);
+    stopLayer.addMany([...stopGraphics, ...stopLabels]);
     renderStopList(stopGraphics);
   }
 
